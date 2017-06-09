@@ -1,0 +1,13 @@
+<toolbox>
+	<xhtml>true</xhtml>
+    <tool>
+        <key>link</key>
+        <scope>request</scope>
+        <class>org.apache.velocity.tools.view.LinkTool</class>
+   </tool> 
+   <tool>
+        <key>params</key>
+        <scope>request</scope>
+        <class>org.apache.velocity.tools.view.ParameterTool</class>
+   </tool> 
+</toolbox>

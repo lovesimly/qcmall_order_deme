@@ -1,0 +1,1 @@
+到磁盘目录，打开命令cmd ，执行mvn clean deploy 可以发布jar到私服

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qcmall.order.dao.UserDAO" >
+  <resultMap id="BaseResultMap" type="com.qcmall.order.domain.UserDO" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="SALARY" property="salary" jdbcType="DOUBLE" />
+    <result column="GMT_CREATED" property="gmtCreated" jdbcType="TIMESTAMP" />
+    <result column="GMT_MODIFIED" property="gmtModified" jdbcType="TIMESTAMP" />
+  </resultMap>
+ 
+  <sql id="Base_Column_List" >
+    ID, NAME, SALARY, GMT_CREATED, GMT_MODIFIED
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_user
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="queryList" resultMap="BaseResultMap">
+   <include refid="PAGINATION.MYSQL_paginationStart" />
+   	select 
+    <include refid="Base_Column_List" />
+    from t_user
+    <include refid="PAGINATION.MYSQL_paginationEnd" />
+  </select>
+
+	<select id="queryAll" resultMap="BaseResultMap">
+   	select 
+    <include refid="Base_Column_List" />
+    from t_user
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_user
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insertSelective" parameterType="com.qcmall.order.domain.UserDO" >
+    <selectKey resultType="java.lang.String" keyProperty="id" order="AFTER" >
+      SELECT @@IDENTITY
+    </selectKey>
+    insert into t_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="salary != null" >
+        SALARY,
+      </if>
+      <if test="gmtCreated != null" >
+        GMT_CREATED,
+      </if>
+      <if test="gmtModified != null" >
+        GMT_MODIFIED,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="salary != null" >
+        #{salary,jdbcType=DOUBLE},
+      </if>
+      <if test="gmtCreated != null" >
+        #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.qcmall.order.domain.UserDO" >
+    update t_user
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="salary != null" >
+        SALARY = #{salary,jdbcType=DOUBLE},
+      </if>
+      <if test="gmtCreated != null" >
+        GMT_CREATED = #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        GMT_MODIFIED = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+ 
+</mapper>
